@@ -11,6 +11,7 @@ import com.atguigu.myzhxy.util.*;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ import java.util.UUID;
  * @date 2022/9/1 23:50
  * @since JDK1.8
  */
+@Api(tags = "系统控制器")
 @RestController
 @RequestMapping("/sms/system")
 public class SystemController {
@@ -133,8 +135,7 @@ public class SystemController {
     @ApiOperation("文件上传统一入口")
     @RequestMapping(value = "/headerImgUpload",method = RequestMethod.POST)
     public Result headerImgUpload(
-            @ApiParam("头像文件") @RequestPart("multipartFile") MultipartFile photo,
-            HttpSession session
+            @ApiParam("头像文件") @RequestPart("multipartFile") MultipartFile photo
     ){
         //获取上传的文件的文件名
         String fileName = photo.getOriginalFilename();
@@ -156,9 +157,11 @@ public class SystemController {
 
 
 
-    //根据用户类型调转到不同的页面
+    @ApiOperation("根据用户类型调转到不同的页面")
     @RequestMapping(value = "/getInfo",method = RequestMethod.GET)
-    public Result getInfoByToken(@RequestHeader("token") String token){
+    public Result getInfoByToken(
+            @ApiParam("token口令") @RequestHeader("token") String token
+    ){
         //查看token是否过期
         boolean expiration = JwtHelper.isExpiration(token);
         //过期了
@@ -192,9 +195,9 @@ public class SystemController {
 
 
 
-
+    @ApiOperation("登录的方法")
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public Result login(@RequestBody LoginForm loginForm,HttpSession session){
+    public Result login(@ApiParam("登录提交信息的form表单") @RequestBody LoginForm loginForm,HttpSession session){
         //验证码校验
         String sessionVerifiCode = (String) session.getAttribute("verifiCode");
         String loginVerifiCode = loginForm.getVerifiCode();
@@ -262,7 +265,7 @@ public class SystemController {
 
     }
 
-    //登录获取验证码
+    @ApiOperation("获取验证码图片")
     @RequestMapping(value = "/getVerifiCodeImage",method = RequestMethod.GET)
     public void getVerifiCodeImage(HttpSession session, HttpServletResponse response){
         //获取图片

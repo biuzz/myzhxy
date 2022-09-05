@@ -229,8 +229,8 @@
                                             }
                                             return a = Object(l["a"])({
                                                 1: "admin",
-                                                2: "student"
-                                            }, "2", "teacher"), r = a[e.userInfo.userType], t.next = 6, e.$API[r].save(e.userForm);
+                                                2: "student",
+                                                3: "teacher"},  ), r = a[e.userInfo.userType], t.next = 6, e.$API[r].save(e.userForm);
                                         case 6:
                                             e.dialogVisible = !1, e.$message.success("更新用户信息成功"), e.$store.dispatch("user/resetUser"), e.$router.replace("/login");
                                         case 10:
